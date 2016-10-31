@@ -83,9 +83,21 @@ class DataViewController: UIViewController {
             contentView.snp.makeConstraints { (make) in
                 make.left.equalTo(10)
                 make.right.equalTo(-10)
-                make.bottom.equalTo(-50)
+                make.bottom.equalTo(-55)
                 make.top.equalTo(titleLabel.snp.bottom).offset(20)
             }
+        }
+        
+        questionLb = UILabel()
+        questionLb.lineBreakMode = .byCharWrapping
+        questionLb.numberOfLines = 0
+        self.contentView.addSubview(questionLb)
+        
+        questionLb.snp.makeConstraints { (make) in
+            make.centerX.equalTo(self.view.snp.centerX)
+            make.top.equalTo(30)
+            make.left.equalTo(0)
+            make.right.equalTo(0)
         }
        
         
@@ -160,19 +172,10 @@ extension DataViewController{
         let type = dict["type"]
         
         
+        self.titleLabel.text = name as? String
+        self.questionLb.text = question as? String
         
-        let titleLb = UILabel()
-        titleLb.numberOfLines = 0
-        titleLb.lineBreakMode = .byCharWrapping
-        titleLb.text = question as! String
-        self.contentView.addSubview(titleLb)
-        
-        titleLb.snp.makeConstraints { (make) in
-            make.left.equalTo(0)
-            make.top.equalTo(10)
-            make.right.equalTo(0)
-            
-        }
+       
         
     }
 
