@@ -40,11 +40,6 @@ class Question3Controller: DataViewController {
                 make.height.equalTo(60)
             }
         }
-        
-        
-        
-        
-        
-        
+  
     }
 }

@@ -33,6 +33,17 @@ class QuestionCell: UITableViewCell {
             make.centerY.equalTo(self.snp.centerY)
             make.right.equalTo(self.snp.right)
         }
+        
+        let line = UIView()
+        self.addSubview(line)
+        line.backgroundColor = UIColor.groupTableViewBackground
+        
+        line.snp.makeConstraints { (make) in
+            make.left.equalTo(0)
+            make.bottom.equalTo(self.snp.bottom)
+            make.right.equalTo(0)
+            make.height.equalTo(1)
+        }
     }
     
 

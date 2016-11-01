@@ -8,9 +8,9 @@
 
 import Foundation
 
-protocol questionProtocol {
+protocol QuestionProtocol {
     
-    func initQuestion(dict:[String:AnyObject]) -> Void;
     
+    func addQuestion() -> Void;
     
 }

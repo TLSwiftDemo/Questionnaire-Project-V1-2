@@ -8,6 +8,8 @@
 
 import UIKit
 import SnapKit
+import CoreData
+
 
 protocol NN_DataViewControllerProtocol:NSObjectProtocol {
     /**
@@ -40,6 +42,8 @@ class DataViewController: UIViewController {
     var nextBtn:UIBarButtonItem!
     
     var delegate:NN_DataViewControllerProtocol?
+    let appDelegate = UIApplication.shared.delegate as! AppDelegate
+    var context:NSManagedObjectContext?
     
   
     //MARK: - Define some view
@@ -50,11 +54,18 @@ class DataViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
-//        initView()
+
         initToolBar()
     }
     
+    init() {
+        super.init(nibName: nil, bundle: nil)
+        context = appDelegate.persistentContainer.viewContext
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     
    
@@ -105,7 +116,7 @@ class DataViewController: UIViewController {
       
         if contentView == nil{
             contentView = UIView()
-            contentView.backgroundColor = UIColor.orange
+            contentView.backgroundColor = UIColor.clear
             self.view.addSubview(contentView)
             
             contentView.snp.makeConstraints { (make) in
@@ -138,14 +149,21 @@ class DataViewController: UIViewController {
     func previousAction(btn:UIBarButtonItem) -> Void {
         print("点击了previous")
         self.delegate?.prevAction(dataViewController: self)
+        
+        addQuestion()
     }
     
     func nextAction(btn:UIBarButtonItem) -> Void {
         print("点击了next")
         
         self.delegate?.nextAction(dataViewController: self)
+        
+       addQuestion()
     }
 
+    func addQuestion() -> Void {
+        
+    }
   
 
     override func viewWillAppear(_ animated: Bool) {
@@ -210,9 +228,10 @@ extension DataViewController{
         self.titleLabel.text = name as? String
         self.questionLb.text = question as? String
         
-       
         
     }
+    
+   
 
 }
 

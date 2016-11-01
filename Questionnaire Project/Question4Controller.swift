@@ -20,6 +20,21 @@ class Question4Controller: DataViewController,UITextViewDelegate {
 
         // Do any additional setup after loading the view.
     }
+    
+    override func initToolBar() {
+        super.initToolBar()
+        
+        let submitBtn = UIBarButtonItem(title: "Submit", style: .plain, target: self, action: #selector(submitAction))
+        submitBtn.tintColor = UIColor.red
+        let spaceBtn = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: self, action: nil)
+        toolBar.setItems([previousBtn,spaceBtn,submitBtn,spaceBtn,nextBtn], animated: true)
+
+    }
+    
+    func submitAction()  {
+        print("点击提交了")
+        
+    }
 
     override func buildUI(dict: [String : AnyObject]) {
         super.buildUI(dict: dict)

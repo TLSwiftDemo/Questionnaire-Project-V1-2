@@ -8,19 +8,63 @@
 
 import UIKit
 import SnapKit
+import CoreData
 
 class Question1Controller: DataViewController,UITableViewDataSource,UITableViewDelegate {
     
     var tableView:UITableView!
     var arrayData:[[String:AnyObject]] = [[String:AnyObject]]()
+    
+    //问题的字典数据
+    var questionDict:[String:AnyObject]!
+    //选中的答案 单选
+    var selectedQuestionDict:[String:AnyObject]?
+ 
 
     override func viewDidLoad() {
         super.viewDidLoad()
        
     }
+    
+   
+    override func addQuestion() {
+        
+        guard let selectedDict = selectedQuestionDict else {
+            return
+        }
+        
+        let question = NSEntityDescription.insertNewObject(forEntityName: "Question", into: context!) as! Question
+        
+        
+        let name = questionDict["name"] as? String
+        let quesitonStr = questionDict["question"] as? String
+        let answerLabel = selectedDict["label"] as? String
+        let answerValue = selectedDict["value"] as? Int
+        
+        question.id = DateUtil.getCurrentTime(formatter: nil)
+        question.answerTime = DateUtil.getCurrentTime(formatter: nil)
+        
+        
+        question.name = name
+        question.type = questionDict["type"] as? String
+        question.question = quesitonStr
+        question.chioceLabel = answerLabel
+        question.chioceValue = "\(answerValue)"
+        
+        do {
+            try context?.save()
+            print("saved data ")
+            
+        } catch {
+            print("error:\(error)")
+        }
+
+    }
+ 
 
     override func buildUI(dict:[String:AnyObject]) -> Void {
         
+        questionDict = dict
         
         if let choices = dict["choices"]{
             arrayData = choices as! [[String : AnyObject]]
@@ -29,9 +73,10 @@ class Question1Controller: DataViewController,UITableViewDataSource,UITableViewD
         
         if tableView == nil{
             tableView = UITableView()
-            tableView.backgroundColor = UIColor.red
+            tableView.backgroundColor = UIColor.clear
             tableView.dataSource = self
             tableView.delegate = self
+            tableView.separatorStyle = .none
             self.contentView.addSubview(tableView)
             
             tableView.snp.makeConstraints { (make) in
@@ -80,6 +125,9 @@ extension Question1Controller{
         cell?.accessoryType = .checkmark
         
         
+        let dict = arrayData[indexPath.row]
+        selectedQuestionDict = dict
         
     }
 }
+

@@ -27,9 +27,10 @@ class Question2Controller: DataViewController,UITableViewDelegate,UITableViewDat
         
         if tableView == nil{
             tableView = UITableView()
-            tableView.backgroundColor = UIColor.red
+            tableView.backgroundColor = UIColor.clear
             tableView.dataSource = self
             tableView.delegate = self
+            tableView.separatorStyle = .none
             self.contentView.addSubview(tableView)
             
             tableView.snp.makeConstraints { (make) in

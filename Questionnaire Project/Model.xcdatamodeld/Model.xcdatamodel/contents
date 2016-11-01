@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="11232" systemVersion="16B2555" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="Question" representedClassName=".Question" syncable="YES">
+        <attribute name="answerTime" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="chioceLabel" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="chioceValue" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="id" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="question" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="type" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="value" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="newRelationship" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Question" syncable="YES"/>
+    </entity>
+    <entity name="Questionnaire" representedClassName=".Questionnaire" syncable="YES">
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="time" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="questionList" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Question" syncable="YES"/>
+    </entity>
+    <elements>
+        <element name="Questionnaire" positionX="-36" positionY="201" width="128" height="114"/>
+        <element name="Question" positionX="-378" positionY="176" width="128" height="228"/>
+    </elements>
+</model>
