@@ -18,12 +18,13 @@ import UIKit
  */
 
 
-class ModelController: NSObject, UIPageViewControllerDataSource {
+class ModelController: NSObject, UIPageViewControllerDataSource,NN_DataViewControllerProtocol {
 
     var pageData: [[String:AnyObject]] = [[String:AnyObject]]()
 
     var controllerArray = [DataViewController]()
-
+    weak var pageViewController:UIPageViewController!
+    
     override init() {
         super.init()
         
@@ -32,12 +33,19 @@ class ModelController: NSObject, UIPageViewControllerDataSource {
         if let questions = questionDict!["questions"] {
             pageData = questions as! [[String:AnyObject]]
         }
-        
-        for item in pageData{
-            let vc = DataViewController()
-            controllerArray.append(vc)
-        }
-        
+      
+        let q1 = Question1Controller()
+        q1.delegate = self
+        let q2 = Question2Controller()
+        q2.delegate=self
+        let q3 = Question3Controller()
+        q3.delegate = self
+        let q4 = Question4Controller()
+        q4.delegate = self
+        controllerArray.append(q1)
+        controllerArray.append(q2)
+        controllerArray.append(q3)
+        controllerArray.append(q4)
         
         // Create the data model.
      
@@ -111,5 +119,48 @@ class ModelController: NSObject, UIPageViewControllerDataSource {
         return self.viewControllerAtIndex(index)
     }
 
+}
+
+extension ModelController{
+  //MARK: - NN_DataViewControllerProtocol
+    func nextAction(dataViewController: DataViewController?) {
+        let index = self.indexOfViewController(dataViewController!)
+        
+        let currentController = self.viewControllerAtIndex(index)
+        var viewControllers:[UIViewController]
+        
+        if currentController == nil{
+         return
+        }
+        
+        let nextController = self.pageViewController(pageViewController, viewControllerAfter: currentController!)
+        
+        guard let nextVC = nextController else{
+            return
+        }
+        
+        viewControllers  = [nextVC]
+        self.pageViewController?.setViewControllers(viewControllers, direction: .forward, animated: true, completion: nil)
+    }
+    
+    func prevAction(dataViewController: DataViewController?) {
+        let index = self.indexOfViewController(dataViewController!)
+        
+        let currentController = self.viewControllerAtIndex(index)
+        var viewControllers:[UIViewController]
+        
+        if currentController == nil{
+           return
+        }
+        
+        let prevController = self.pageViewController(pageViewController, viewControllerBefore: currentController!)
+        
+        guard let previousController = prevController else{
+            return
+        }
+        
+        viewControllers  = [previousController]
+        self.pageViewController?.setViewControllers(viewControllers, direction: .reverse, animated: true, completion: nil)
+    }
 }
 

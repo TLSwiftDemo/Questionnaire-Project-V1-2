@@ -52,6 +52,7 @@ class RootViewController: UIViewController, UIPageViewControllerDelegate {
         // In more complex implementations, the model controller may be passed to the view controller.
         if _modelController == nil {
             _modelController = ModelController()
+            _modelController?.pageViewController = self.pageViewController
         }
         return _modelController!
     }

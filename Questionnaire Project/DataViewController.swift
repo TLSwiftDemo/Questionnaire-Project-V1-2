@@ -9,6 +9,28 @@
 import UIKit
 import SnapKit
 
+protocol NN_DataViewControllerProtocol:NSObjectProtocol {
+    /**
+     上一页
+     
+     - parameter index: 索引
+     
+     - returns:
+     */
+    func prevAction(dataViewController:DataViewController?) -> Void;
+    /**
+     下一页
+     
+     - parameter index: 索引
+     
+     - returns:
+     */
+    func nextAction(dataViewController:DataViewController?) -> Void;
+    
+
+    
+}
+
 class DataViewController: UIViewController {
     
     var dataObject:String = ""
@@ -16,6 +38,8 @@ class DataViewController: UIViewController {
     var toolBar:UIToolbar!
     var previousBtn:UIBarButtonItem!
     var nextBtn:UIBarButtonItem!
+    
+    var delegate:NN_DataViewControllerProtocol?
     
   
     //MARK: - Define some view
@@ -58,6 +82,10 @@ class DataViewController: UIViewController {
         toolBar.setItems([previousBtn,spaceBtn,nextBtn], animated: true)
     }
     
+    func buildUI(dict:[String:AnyObject]) -> Void {
+        
+    }
+    
     func initView() -> Void {
         
         //标题
@@ -88,28 +116,34 @@ class DataViewController: UIViewController {
             }
         }
         
-        questionLb = UILabel()
-        questionLb.lineBreakMode = .byCharWrapping
-        questionLb.numberOfLines = 0
-        self.contentView.addSubview(questionLb)
-        
-        questionLb.snp.makeConstraints { (make) in
-            make.centerX.equalTo(self.view.snp.centerX)
-            make.top.equalTo(30)
-            make.left.equalTo(0)
-            make.right.equalTo(0)
+        if questionLb == nil{
+            questionLb = UILabel()
+            questionLb.lineBreakMode = .byCharWrapping
+            questionLb.numberOfLines = 0
+            self.contentView.addSubview(questionLb)
+            
+            questionLb.snp.makeConstraints { (make) in
+                make.centerX.equalTo(self.view.snp.centerX)
+                make.top.equalTo(30)
+                make.left.equalTo(0)
+                make.right.equalTo(0)
+            }
         }
        
+        
         
         
     }
     
     func previousAction(btn:UIBarButtonItem) -> Void {
         print("点击了previous")
+        self.delegate?.prevAction(dataViewController: self)
     }
     
     func nextAction(btn:UIBarButtonItem) -> Void {
         print("点击了next")
+        
+        self.delegate?.nextAction(dataViewController: self)
     }
 
   
@@ -155,6 +189,7 @@ extension DataViewController{
          */
         
         initView()
+        buildUI(dict: dict)
         guard let name = dict["name"]  else {
             return
         }
