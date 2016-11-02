@@ -33,6 +33,11 @@ class Question1Controller: DataViewController,UITableViewDataSource,UITableViewD
             return
         }
         
+        if outputUUID.isEmpty
+        {
+          return
+        }
+        
         let question = NSEntityDescription.insertNewObject(forEntityName: "Question", into: context!) as! Question
         
         
@@ -41,7 +46,7 @@ class Question1Controller: DataViewController,UITableViewDataSource,UITableViewD
         let answerLabel = selectedDict["label"] as? String
         let answerValue = selectedDict["value"] as? Int
         
-        question.id = DateUtil.getCurrentTime(formatter: nil)
+        question.id = outputUUID
         question.answerTime = DateUtil.getCurrentTime(formatter: nil)
         
         
@@ -53,7 +58,10 @@ class Question1Controller: DataViewController,UITableViewDataSource,UITableViewD
         
         do {
             try context?.save()
-            print("saved data ")
+            
+            if !appDelegate.globalQuestionsList.isContains(item:question){
+                appDelegate.globalQuestionsList.append(question)
+            }
             
         } catch {
             print("error:\(error)")
@@ -65,6 +73,7 @@ class Question1Controller: DataViewController,UITableViewDataSource,UITableViewD
     override func buildUI(dict:[String:AnyObject]) -> Void {
         
         questionDict = dict
+        outputUUID = QuestionUtil.randomSmallCaseString(length: 5)
         
         if let choices = dict["choices"]{
             arrayData = choices as! [[String : AnyObject]]

@@ -27,6 +27,16 @@ public class Questionnaire: NSManagedObject {
         
         return nil
     }
+    
+    
+    class func deleteQuestionnaire(questionnaire:Questionnaire,inContextObjectContext context:NSManagedObjectContext) -> Void {
+        
+        do {
+            try context.delete(questionnaire)
+        } catch  {
+            print(error)
+        }
+    }
 
     
   }

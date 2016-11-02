@@ -53,13 +53,17 @@ class Question4Controller: DataViewController,UITextViewDelegate {
            questionnaire = NSEntityDescription.insertNewObject(forEntityName: "Questionnaire", into: context!) as? Questionnaire
         }
         questionnaire?.time = DateUtil.getCurrentTime(formatter: nil)
-        questionnaire?.name = output
+        questionnaire?.name = QuestionUtil.generateUUID()
         
-        
-        question.newRelationship = questionnaire
+        //设置全局所有的问题的newRelationship
+        for item in appDelegate.globalQuestionsList {
+            item.newRelationship = questionnaire
+        }
         
         do {
+            
             try context?.save()
+            
             print("调查问卷对象保存成功了")
             
             let resultVc = ResultController()
@@ -74,26 +78,18 @@ class Question4Controller: DataViewController,UITextViewDelegate {
     //MARK: - 提交答案
     override func addQuestion() {
       
-        
-        
         let q1 = Question.getQuestionById(qid: output, inManagedObjectContext: context!)
         if q1 != nil{
-          question = q1
+            question = q1
         }else{
-           question = NSEntityDescription.insertNewObject(forEntityName: "Question", into: context!) as! Question
+            question = NSEntityDescription.insertNewObject(forEntityName: "Question", into: context!) as! Question
         }
-     
-        
         
         let name = questionDict["name"] as? String
         let quesitonStr = questionDict["question"] as? String
         let answer = textView.text
         
-    
-        let quesitonnaire = Questionnaire(context: context!)
-        quesitonnaire.time = DateUtil.getCurrentTime(formatter: nil)
-        quesitonnaire.name = DateUtil.getCurrentTime(formatter: nil)
-     
+   
         question.id = output
         question.answerTime = DateUtil.getCurrentTime(formatter: nil)
         
@@ -104,10 +100,14 @@ class Question4Controller: DataViewController,UITextViewDelegate {
         
         
         
-        
         do {
             try context?.save()
             print("saved data ")
+            
+            if !appDelegate.globalQuestionsList.isContains(item: question){
+                appDelegate.globalQuestionsList.append(question)
+            }
+            
             
         } catch {
             print("error:\(error)")
@@ -120,7 +120,10 @@ class Question4Controller: DataViewController,UITextViewDelegate {
         super.buildUI(dict: dict)
         
         questionDict = dict
-        output = randomSmallCaseString(length: 10)
+        if output.isEmpty == false{
+          return
+        }
+        output = QuestionUtil.randomSmallCaseString(length: 10)
         
         if let choices = dict["choices"]{
             arrayData = choices as! [[String : AnyObject]]
@@ -161,20 +164,4 @@ class Question4Controller: DataViewController,UITextViewDelegate {
     }
 }
 
-extension Question4Controller{
-   
-    func randomSmallCaseString(length: Int) -> String {
-        
-        if output.isEmpty == false{
-          return output
-        }
-        
-        for _ in 0..<length {
-            let randomNumber = arc4random() % 26 + 97
-            let randomChar = Character(UnicodeScalar(randomNumber)!)
-            output.append(randomChar)
-        }
-        
-        return output
-    }
-}
+

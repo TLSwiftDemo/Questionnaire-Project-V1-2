@@ -37,14 +37,17 @@ class ResultController: UIViewController,UITableViewDelegate,UITableViewDataSour
     
     func requestData() -> Void {
         let request = NSFetchRequest<Questionnaire>(entityName: "Questionnaire")
-//        request.predicate = NSPredicate(format: "name = %@", "")
+        
+        let sortDescritor = NSSortDescriptor(key: "time", ascending: false, selector: #selector(NSString.localizedCaseInsensitiveCompare(_:)))
+        request.sortDescriptors = [sortDescritor]
+        
+      
         
         do {
             if let results = (try? context?.fetch(request)){
-              
                 arrayData = results!
             }
-        } catch  {
+        } catch {
             
         }
         
@@ -97,9 +100,41 @@ class ResultController: UIViewController,UITableViewDelegate,UITableViewDataSour
         return 60
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        let questionnaire = arrayData[indexPath.row]
+        
         let detail = DetailController()
+        detail.questionnaire = questionnaire
         self.navigationController?.pushViewController(detail, animated: true)
     }
+    
+    func tableView(_ tableView: UITableView, titleForDeleteConfirmationButtonForRowAt indexPath: IndexPath) -> String? {
+        return "Delete"
+    }
+    
+    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        return true
+    }
+    
+    func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCellEditingStyle {
+        return .delete
+    }
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete{
+          
+            let questionnaire = arrayData[indexPath.row]
+            arrayData.removeObj(item: questionnaire)
+            
+//            tableView.reloadRows(at: [indexPath], with: .automatic)
+            tableView.deleteRows(at: [indexPath], with: .automatic)
+            
+            Questionnaire.deleteQuestionnaire(questionnaire: questionnaire, inContextObjectContext: context!)
+            
+        }
+    }
+    
  
+    
+   
 
 }

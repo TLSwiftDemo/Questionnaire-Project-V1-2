@@ -26,6 +26,8 @@ class AnswerCell: UITableViewCell {
         questionLb = UILabel()
         questionLb.numberOfLines = 0
         questionLb.lineBreakMode = .byCharWrapping
+        questionLb.font = UIFont.boldSystemFont(ofSize: 20)
+        questionLb.textColor = UIColor.darkGray
         self.addSubview(questionLb)
         questionLb.snp.makeConstraints { (make) in
             make.left.equalTo(10)
@@ -36,6 +38,7 @@ class AnswerCell: UITableViewCell {
         
         answerTimeLb = UILabel()
         answerTimeLb.textAlignment = .right
+        answerTimeLb.textColor = UIColor.brown
         self.addSubview(answerTimeLb)
         
         answerTimeLb.snp.makeConstraints { (make) in

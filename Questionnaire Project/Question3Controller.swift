@@ -7,22 +7,58 @@
 //
 
 import UIKit
+import CoreData
 
 class Question3Controller: DataViewController {
 
      var arrayData:[[String:AnyObject]] = [[String:AnyObject]]()
     
     var operationView:PlusAndMinusView!
+    //问题的字典数据
+    var questionDict:[String:AnyObject]!
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
     }
+    
+    override func addQuestion() {
+        let question = NSEntityDescription.insertNewObject(forEntityName: "Question", into: context!) as! Question
+        
+        
+        let name = questionDict["name"] as? String
+        let quesitonStr = questionDict["question"] as? String
+        let answerLabel = operationView.count
+        
+        question.id = outputUUID
+        question.answerTime = DateUtil.getCurrentTime(formatter: nil)
+        
+        
+        question.name = name
+        question.type = questionDict["type"] as? String
+        question.question = quesitonStr
+        question.chioceLabel = "\(answerLabel)"
+        
+        do {
+            try context?.save()
+            
+            if !appDelegate.globalQuestionsList.isContains(item: question){
+                appDelegate.globalQuestionsList.append(question)
+            }
+            
+        } catch {
+            print("error:\(error)")
+        }
+
+    }
 
 
     override func buildUI(dict: [String : AnyObject]) {
         super.buildUI(dict: dict)
+        
+        questionDict = dict
+        outputUUID = QuestionUtil.randomSmallCaseString(length: 5)
         
         if let choices = dict["choices"]{
             arrayData = choices as! [[String : AnyObject]]

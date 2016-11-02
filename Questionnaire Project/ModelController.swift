@@ -161,6 +161,8 @@ extension ModelController{
         
         
         
+        
+        
         viewControllers  = [previousController]
         self.pageViewController?.setViewControllers(viewControllers, direction: .reverse, animated: true, completion: nil)
     }

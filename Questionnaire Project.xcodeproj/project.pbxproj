@@ -10,6 +10,7 @@
 		499E65301DC9BD960052F35C /* ResultController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 499E652F1DC9BD960052F35C /* ResultController.swift */; };
 		499E65321DC9C1360052F35C /* DetailController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 499E65311DC9C1360052F35C /* DetailController.swift */; };
 		499E65371DC9C2530052F35C /* AnswerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 499E65361DC9C2530052F35C /* AnswerCell.swift */; };
+		499E653A1DC9CA270052F35C /* QuestionUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 499E65391DC9CA270052F35C /* QuestionUtil.swift */; };
 		49BC429C1DC82806008BDB9E /* Question1Controller.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49BC429B1DC82806008BDB9E /* Question1Controller.swift */; };
 		49BC429E1DC82823008BDB9E /* Question2Controller.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49BC429D1DC82823008BDB9E /* Question2Controller.swift */; };
 		49BC42A01DC82A33008BDB9E /* QuestionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49BC429F1DC82A33008BDB9E /* QuestionCell.swift */; };
@@ -52,6 +53,7 @@
 		499E652F1DC9BD960052F35C /* ResultController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResultController.swift; sourceTree = "<group>"; };
 		499E65311DC9C1360052F35C /* DetailController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailController.swift; sourceTree = "<group>"; };
 		499E65361DC9C2530052F35C /* AnswerCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnswerCell.swift; sourceTree = "<group>"; };
+		499E65391DC9CA270052F35C /* QuestionUtil.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QuestionUtil.swift; sourceTree = "<group>"; };
 		49BC429B1DC82806008BDB9E /* Question1Controller.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Question1Controller.swift; sourceTree = "<group>"; };
 		49BC429D1DC82823008BDB9E /* Question2Controller.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Question2Controller.swift; sourceTree = "<group>"; };
 		49BC429F1DC82A33008BDB9E /* QuestionCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QuestionCell.swift; sourceTree = "<group>"; };
@@ -111,6 +113,16 @@
 			name = View;
 			sourceTree = "<group>";
 		};
+		499E65381DC9C95C0052F35C /* PageViewController */ = {
+			isa = PBXGroup;
+			children = (
+				49D7702B1DC7233C001C0D70 /* RootViewController.swift */,
+				49D7702D1DC7233C001C0D70 /* DataViewController.swift */,
+				49D7702F1DC7233C001C0D70 /* ModelController.swift */,
+			);
+			name = PageViewController;
+			sourceTree = "<group>";
+		};
 		49BC429A1DC827E9008BDB9E /* Question */ = {
 			isa = PBXGroup;
 			children = (
@@ -138,6 +150,7 @@
 			isa = PBXGroup;
 			children = (
 				49BC42EC1DC880EC008BDB9E /* DateUtil.swift */,
+				499E65391DC9CA270052F35C /* QuestionUtil.swift */,
 			);
 			name = Utils;
 			sourceTree = "<group>";
@@ -201,11 +214,9 @@
 		49D770501DC7243D001C0D70 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				499E65381DC9C95C0052F35C /* PageViewController */,
 				49BC429A1DC827E9008BDB9E /* Question */,
 				49F987B91DC73DDC00EA4038 /* Protocol */,
-				49D7702B1DC7233C001C0D70 /* RootViewController.swift */,
-				49D7702D1DC7233C001C0D70 /* DataViewController.swift */,
-				49D7702F1DC7233C001C0D70 /* ModelController.swift */,
 				49D770531DC726EE001C0D70 /* StartController.swift */,
 				499E652F1DC9BD960052F35C /* ResultController.swift */,
 				499E65311DC9C1360052F35C /* DetailController.swift */,
@@ -431,6 +442,7 @@
 				49BC42A61DC83150008BDB9E /* PlusAndMinusView.swift in Sources */,
 				49D7702E1DC7233C001C0D70 /* DataViewController.swift in Sources */,
 				49D7702A1DC7233C001C0D70 /* AppDelegate.swift in Sources */,
+				499E653A1DC9CA270052F35C /* QuestionUtil.swift in Sources */,
 				49BC42A01DC82A33008BDB9E /* QuestionCell.swift in Sources */,
 				49BC42F71DC88439008BDB9E /* Question+CoreDataProperties.swift in Sources */,
 				49BC42A21DC830AA008BDB9E /* Question3Controller.swift in Sources */,

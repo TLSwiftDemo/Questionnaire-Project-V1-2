@@ -16,6 +16,8 @@ class DetailController: UIViewController,UITableViewDelegate,UITableViewDataSour
     var arrayData:[Question] = [Question]()
     var context:NSManagedObjectContext?
     let appDelegate = UIApplication.shared.delegate as! AppDelegate
+    
+    var questionnaire:Questionnaire!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -27,7 +29,7 @@ class DetailController: UIViewController,UITableViewDelegate,UITableViewDataSour
     
     func requestData() -> Void {
         let request = NSFetchRequest<Question>(entityName: "Question")
-//        request.predicate = NSPredicate(format: "name = %@", "")
+        request.predicate = NSPredicate(format: "newRelationship = %@", questionnaire)
         
         do {
             if let results = (try? context?.fetch(request)){

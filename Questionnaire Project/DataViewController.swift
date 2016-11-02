@@ -44,6 +44,8 @@ class DataViewController: UIViewController {
     var delegate:NN_DataViewControllerProtocol?
     let appDelegate = UIApplication.shared.delegate as! AppDelegate
     var context:NSManagedObjectContext?
+    //作为全局的uuid字符串
+    var outputUUID:String = ""
     
   
     //MARK: - Define some view
