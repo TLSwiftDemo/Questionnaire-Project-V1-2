@@ -9,7 +9,25 @@
 import Foundation
 import CoreData
 
-
+@objc
 public class Question: NSManagedObject {
+    
+    
 
-}
+    class  func getQuestionById(qid questionId:String,inManagedObjectContext context:NSManagedObjectContext) -> Question? {
+        let request = NSFetchRequest<Question>(entityName: "Question")
+        
+        request.predicate = NSPredicate(format: "id = %@", questionId)
+        do{
+        
+            if let question = (try? context.fetch(request))?.first{
+              return question
+            }
+        }catch {
+          print(error)
+        }
+        
+        return nil
+    }
+    
+   }

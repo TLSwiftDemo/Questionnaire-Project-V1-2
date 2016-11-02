@@ -175,39 +175,11 @@ class DataViewController: UIViewController {
 
 extension DataViewController{
     public func initQuestion(dict:[String:AnyObject]) -> Void{
-        /*
-         {
-         "name": "question-1",
-         "type": "single-option",
-         "title": "Q 1",
-         "question": "How much have you enjoyed COMP327 practicals so far?",
-         "choices": [
-         {
-         "label": "not at all",
-         "value": 1
-         },
-         {
-         "label": "a little",
-         "value": 2
-         },
-         {
-         "label": "somewhat",
-         "value": 3
-         },
-         {
-         "label": "quite a lot",
-         "value": 4
-         },
-         {
-         "label": "Very much",
-         "value": 5
-         }
-         ]
-         }
-         */
+      
         
         initView()
         buildUI(dict: dict)
+        
         guard let name = dict["name"]  else {
             return
         }

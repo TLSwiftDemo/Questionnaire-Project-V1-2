@@ -9,15 +9,15 @@
         <attribute name="question" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="type" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="value" optional="YES" attributeType="String" syncable="YES"/>
-        <relationship name="newRelationship" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Question" syncable="YES"/>
+        <relationship name="newRelationship" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Questionnaire" syncable="YES"/>
     </entity>
     <entity name="Questionnaire" representedClassName=".Questionnaire" syncable="YES">
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="time" optional="YES" attributeType="String" syncable="YES"/>
-        <relationship name="questionList" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Question" syncable="YES"/>
+        <relationship name="questionList" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Question" syncable="YES"/>
     </entity>
     <elements>
-        <element name="Questionnaire" positionX="-36" positionY="201" width="128" height="114"/>
-        <element name="Question" positionX="-378" positionY="176" width="128" height="228"/>
+        <element name="Question" positionX="-378" positionY="176" width="128" height="220"/>
+        <element name="Questionnaire" positionX="-36" positionY="201" width="128" height="106"/>
     </elements>
 </model>

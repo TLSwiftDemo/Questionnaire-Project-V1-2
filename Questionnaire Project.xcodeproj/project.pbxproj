@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		499E65301DC9BD960052F35C /* ResultController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 499E652F1DC9BD960052F35C /* ResultController.swift */; };
+		499E65321DC9C1360052F35C /* DetailController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 499E65311DC9C1360052F35C /* DetailController.swift */; };
+		499E65371DC9C2530052F35C /* AnswerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 499E65361DC9C2530052F35C /* AnswerCell.swift */; };
 		49BC429C1DC82806008BDB9E /* Question1Controller.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49BC429B1DC82806008BDB9E /* Question1Controller.swift */; };
 		49BC429E1DC82823008BDB9E /* Question2Controller.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49BC429D1DC82823008BDB9E /* Question2Controller.swift */; };
 		49BC42A01DC82A33008BDB9E /* QuestionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49BC429F1DC82A33008BDB9E /* QuestionCell.swift */; };
@@ -46,6 +49,9 @@
 
 /* Begin PBXFileReference section */
 		40B7BA2CF6C6C68170A23D77 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
+		499E652F1DC9BD960052F35C /* ResultController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResultController.swift; sourceTree = "<group>"; };
+		499E65311DC9C1360052F35C /* DetailController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailController.swift; sourceTree = "<group>"; };
+		499E65361DC9C2530052F35C /* AnswerCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnswerCell.swift; sourceTree = "<group>"; };
 		49BC429B1DC82806008BDB9E /* Question1Controller.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Question1Controller.swift; sourceTree = "<group>"; };
 		49BC429D1DC82823008BDB9E /* Question2Controller.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Question2Controller.swift; sourceTree = "<group>"; };
 		49BC429F1DC82A33008BDB9E /* QuestionCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QuestionCell.swift; sourceTree = "<group>"; };
@@ -97,6 +103,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		499E65331DC9C2130052F35C /* View */ = {
+			isa = PBXGroup;
+			children = (
+				499E65361DC9C2530052F35C /* AnswerCell.swift */,
+			);
+			name = View;
+			sourceTree = "<group>";
+		};
 		49BC429A1DC827E9008BDB9E /* Question */ = {
 			isa = PBXGroup;
 			children = (
@@ -151,6 +165,7 @@
 		49D770281DC7233C001C0D70 /* Questionnaire Project */ = {
 			isa = PBXGroup;
 			children = (
+				499E65331DC9C2130052F35C /* View */,
 				49BC42EB1DC880DB008BDB9E /* Utils */,
 				49BC42E21DC87ED8008BDB9E /* CoreData */,
 				49D770521DC7244A001C0D70 /* Model */,
@@ -192,6 +207,8 @@
 				49D7702D1DC7233C001C0D70 /* DataViewController.swift */,
 				49D7702F1DC7233C001C0D70 /* ModelController.swift */,
 				49D770531DC726EE001C0D70 /* StartController.swift */,
+				499E652F1DC9BD960052F35C /* ResultController.swift */,
+				499E65311DC9C1360052F35C /* DetailController.swift */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -396,7 +413,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				49D7702C1DC7233C001C0D70 /* RootViewController.swift in Sources */,
+				499E65321DC9C1360052F35C /* DetailController.swift in Sources */,
 				49BC42F81DC88439008BDB9E /* Questionnaire+CoreDataClass.swift in Sources */,
+				499E65371DC9C2530052F35C /* AnswerCell.swift in Sources */,
 				49BC429C1DC82806008BDB9E /* Question1Controller.swift in Sources */,
 				49D770301DC7233C001C0D70 /* ModelController.swift in Sources */,
 				49BC42F61DC88439008BDB9E /* Question+CoreDataClass.swift in Sources */,
@@ -407,6 +426,7 @@
 				49BC42F91DC88439008BDB9E /* Questionnaire+CoreDataProperties.swift in Sources */,
 				49D770541DC726EE001C0D70 /* StartController.swift in Sources */,
 				49BC429E1DC82823008BDB9E /* Question2Controller.swift in Sources */,
+				499E65301DC9BD960052F35C /* ResultController.swift in Sources */,
 				49F987B81DC7385500EA4038 /* QuestionModel.swift in Sources */,
 				49BC42A61DC83150008BDB9E /* PlusAndMinusView.swift in Sources */,
 				49D7702E1DC7233C001C0D70 /* DataViewController.swift in Sources */,

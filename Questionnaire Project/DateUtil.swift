@@ -12,11 +12,14 @@ class DateUtil: NSObject {
 
   static func getCurrentTime(formatter:String?) -> String {
         let dateFormatter = DateFormatter()
-        var temp = "YYYY-MM-DD hh:mm:s"
+        dateFormatter.locale = Locale.current
+        print(Date())
+    
+        let temp = "yyyy-MM-dd HH:mm:ss"
         if formatter == nil{
             dateFormatter.dateFormat = temp
         }
-        dateFormatter.dateFormat = formatter
+//        dateFormatter.dateFormat = formatter
 
         let dateStr = dateFormatter.string(from: Date())
         

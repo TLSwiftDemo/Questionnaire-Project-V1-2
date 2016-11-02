@@ -2,13 +2,13 @@
 //  Questionnaire+CoreDataProperties.swift
 //  Questionnaire Project
 //
-//  Created by Andrew on 2016/11/1.
+//  Created by Andrew on 2016/11/2.
 //  Copyright © 2016年 Andrew. All rights reserved.
 //
 
 import Foundation
 import CoreData
-
+ 
 
 extension Questionnaire {
 
@@ -16,8 +16,8 @@ extension Questionnaire {
         return NSFetchRequest<Questionnaire>(entityName: "Questionnaire");
     }
 
-    @NSManaged public var time: String?
     @NSManaged public var name: String?
+    @NSManaged public var time: String?
     @NSManaged public var questionList: NSSet?
 
 }

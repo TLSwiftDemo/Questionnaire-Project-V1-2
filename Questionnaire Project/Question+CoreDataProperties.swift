@@ -2,7 +2,7 @@
 //  Question+CoreDataProperties.swift
 //  Questionnaire Project
 //
-//  Created by Andrew on 2016/11/1.
+//  Created by Andrew on 2016/11/2.
 //  Copyright © 2016年 Andrew. All rights reserved.
 //
 
@@ -24,6 +24,6 @@ extension Question {
     @NSManaged public var question: String?
     @NSManaged public var type: String?
     @NSManaged public var value: String?
-    @NSManaged public var newRelationship: Question?
+    @NSManaged public var newRelationship: Questionnaire?
 
 }
