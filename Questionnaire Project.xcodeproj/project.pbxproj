@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		497032411DCB2941003E49EC /* BaseController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 497032401DCB2941003E49EC /* BaseController.swift */; };
 		499E65301DC9BD960052F35C /* ResultController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 499E652F1DC9BD960052F35C /* ResultController.swift */; };
 		499E65321DC9C1360052F35C /* DetailController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 499E65311DC9C1360052F35C /* DetailController.swift */; };
 		499E65371DC9C2530052F35C /* AnswerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 499E65361DC9C2530052F35C /* AnswerCell.swift */; };
@@ -50,6 +51,7 @@
 
 /* Begin PBXFileReference section */
 		40B7BA2CF6C6C68170A23D77 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
+		497032401DCB2941003E49EC /* BaseController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseController.swift; sourceTree = "<group>"; };
 		499E652F1DC9BD960052F35C /* ResultController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResultController.swift; sourceTree = "<group>"; };
 		499E65311DC9C1360052F35C /* DetailController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailController.swift; sourceTree = "<group>"; };
 		499E65361DC9C2530052F35C /* AnswerCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnswerCell.swift; sourceTree = "<group>"; };
@@ -221,6 +223,7 @@
 				49D770531DC726EE001C0D70 /* StartController.swift */,
 				499E652F1DC9BD960052F35C /* ResultController.swift */,
 				499E65311DC9C1360052F35C /* DetailController.swift */,
+				497032401DCB2941003E49EC /* BaseController.swift */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -437,6 +440,7 @@
 				499E653A1DC9CA270052F35C /* QuestionUtil.swift in Sources */,
 				49BC42A01DC82A33008BDB9E /* QuestionCell.swift in Sources */,
 				49BC42F71DC88439008BDB9E /* Question+CoreDataProperties.swift in Sources */,
+				497032411DCB2941003E49EC /* BaseController.swift in Sources */,
 				49BC42A21DC830AA008BDB9E /* Question3Controller.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

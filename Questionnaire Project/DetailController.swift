@@ -10,7 +10,7 @@ import UIKit
 import CoreData
 import SnapKit
 
-class DetailController: UIViewController,UITableViewDelegate,UITableViewDataSource {
+class DetailController: BaseController,UITableViewDelegate,UITableViewDataSource {
     
     var tableView:UITableView!
     var arrayData:[Question] = [Question]()
@@ -23,7 +23,7 @@ class DetailController: UIViewController,UITableViewDelegate,UITableViewDataSour
         super.viewDidLoad()
         context = appDelegate.persistentContainer.viewContext
         self.navigationItem.title = "Questionnaire details"
-
+        self.titlelb.text = "Questionnaire details"
         requestData()
         initView()
     }
@@ -56,7 +56,7 @@ class DetailController: UIViewController,UITableViewDelegate,UITableViewDataSour
         tableView.snp.makeConstraints { (make) in
             make.left.equalTo(0)
             make.right.equalTo(0)
-            make.top.equalTo(0)
+            make.top.equalTo(64)
             make.bottom.equalTo(0)
         }
     }

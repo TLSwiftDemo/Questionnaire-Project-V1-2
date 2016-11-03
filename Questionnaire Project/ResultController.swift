@@ -10,7 +10,7 @@ import UIKit
 import CoreData
 import SnapKit
 
-class ResultController: UIViewController,UITableViewDelegate,UITableViewDataSource {
+class ResultController: BaseController,UITableViewDelegate,UITableViewDataSource {
     
     var tableView:UITableView!
     var arrayData:[Questionnaire] = [Questionnaire]()
@@ -18,11 +18,7 @@ class ResultController: UIViewController,UITableViewDelegate,UITableViewDataSour
      var context:NSManagedObjectContext?
     let appDelegate = UIApplication.shared.delegate as! AppDelegate
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        self.navigationController?.setNavigationBarHidden(false, animated: false)
-    }
-    
+
 
 
     override func viewDidLoad() {
@@ -30,10 +26,10 @@ class ResultController: UIViewController,UITableViewDelegate,UITableViewDataSour
         context = appDelegate.persistentContainer.viewContext
         // Do any additional setup after loading the view.
         self.navigationItem.title = "Questionnaire"
+        self.titlelb.text = "Questionnaire"
         requestData()
         
         initView()
-        
     }
     
     func requestData() -> Void {
@@ -56,6 +52,8 @@ class ResultController: UIViewController,UITableViewDelegate,UITableViewDataSour
     }
     
     func initView() -> Void {
+        
+        
         tableView = UITableView()
         self.view.addSubview(tableView)
         
@@ -65,11 +63,12 @@ class ResultController: UIViewController,UITableViewDelegate,UITableViewDataSour
         tableView.snp.makeConstraints { (make) in
             make.left.equalTo(0)
             make.right.equalTo(0)
-            make.top.equalTo(0)
+            make.top.equalTo(64)
             make.bottom.equalTo(0)
         }
     }
-
+    
+   
     
     //MARK: - UItableview dataSource
     func numberOfSections(in tableView: UITableView) -> Int {
