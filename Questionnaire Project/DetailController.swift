@@ -22,7 +22,8 @@ class DetailController: UIViewController,UITableViewDelegate,UITableViewDataSour
     override func viewDidLoad() {
         super.viewDidLoad()
         context = appDelegate.persistentContainer.viewContext
-        
+        self.navigationItem.title = "Questionnaire details"
+
         requestData()
         initView()
     }

@@ -16,12 +16,26 @@ class AnswerCell: UITableViewCell {
     
     var answerValue:UILabel!
     
+    /// type of question
+    var typeLb:UILabel!
     var answerTimeLb:UILabel!
     
     
     
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
+        
+        typeLb = UILabel()
+        typeLb.font = UIFont.boldSystemFont(ofSize: 20)
+        typeLb.textColor=UIColor.red
+        self.addSubview(typeLb)
+        
+        typeLb.snp.makeConstraints { (make) in
+            make.left.equalTo(10)
+            make.top.equalTo(10)
+            make.right.equalTo(-25)
+            make.height.equalTo(20)
+        }
         
         questionLb = UILabel()
         questionLb.numberOfLines = 0
@@ -31,7 +45,7 @@ class AnswerCell: UITableViewCell {
         self.addSubview(questionLb)
         questionLb.snp.makeConstraints { (make) in
             make.left.equalTo(10)
-            make.top.equalTo(10)
+            make.top.equalTo(typeLb.snp.bottom).offset(10)
             make.right.equalTo(-25)
             make.height.equalTo(50)
         }
@@ -83,7 +97,7 @@ class AnswerCell: UITableViewCell {
         
         questionLb.text = question.question
         answerLb.text = question.chioceLabel
-        
+        typeLb.text = question.type
         answerTimeLb.text = question.answerTime
         
     }

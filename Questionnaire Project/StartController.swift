@@ -9,8 +9,13 @@
 import UIKit
 import SnapKit
 
+var globalQuestionDict:[String:AnyObject]?
+
 class StartController: UIViewController {
 
+    
+    var spinner:UIActivityIndicatorView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = UIColor.white
@@ -43,6 +48,15 @@ class StartController: UIViewController {
             make.top.equalTo(btn.snp.bottom).offset(10)
             make.size.equalTo(btn.snp.size)
         }
+        
+        
+        spinner = UIActivityIndicatorView()
+        spinner.activityIndicatorViewStyle = .gray
+        self.view.addSubview(spinner)
+        
+        spinner.snp.makeConstraints { (make) in
+            make.center.equalTo(self.view.snp.center)
+        }
 
     }
     
@@ -53,16 +67,35 @@ class StartController: UIViewController {
     
     func startAction() -> Void {
         
+        spinner.startAnimating()
+        
+        if QuestionModel.getJsonFromCatch() != nil {
+            globalQuestionDict = QuestionModel.getJsonFromCatch()
+            self.spinner.stopAnimating()
+             self.skipAction()
+        }else{
+            QuestionModel.getJsonDataFromServer(completionHandler: { (dict) in
+                globalQuestionDict = dict
+                self.skipAction()
+                self.spinner.stopAnimating()
+                
+                
+            }) { (error) in
+                self.spinner.stopAnimating()
+            }
+        }
+        
+        
+    }
+    
+
+    func skipAction() -> Void {
         let storyBoard = UIStoryboard(name: "Main", bundle: Bundle.main)
         
-        
-
         let rootController = storyBoard.instantiateViewController(withIdentifier: "RootViewController") as! RootViewController
-        
         
         self.navigationController?.pushViewController(rootController, animated: true)
     }
-
   
 
 }

@@ -25,14 +25,18 @@ class Question2Controller: DataViewController,UITableViewDelegate,UITableViewDat
     
     override func addQuestion() {
         
-       
-        
         if outputUUID.isEmpty
         {
             return
         }
         
-        let question = NSEntityDescription.insertNewObject(forEntityName: "Question", into: context!) as! Question
+        let q1 = Question.getQuestionById(qid: outputUUID, inManagedObjectContext: context!)
+        if q1 != nil{
+            self.question = q1
+        }else{
+            self.question = NSEntityDescription.insertNewObject(forEntityName: "Question", into: context!) as! Question
+            question.id = outputUUID
+        }
         
         let name = questionDict["name"] as? String
         let quesitonStr = questionDict["question"] as? String
@@ -80,6 +84,9 @@ class Question2Controller: DataViewController,UITableViewDelegate,UITableViewDat
     override func buildUI(dict:[String:AnyObject]) -> Void {
         
         questionDict = dict
+        if outputUUID.isEmpty == false{
+            return
+        }
         outputUUID = QuestionUtil.randomSmallCaseString(length: 5)
         
         if let choices = dict["choices"]{

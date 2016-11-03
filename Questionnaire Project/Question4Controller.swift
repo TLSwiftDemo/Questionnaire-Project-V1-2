@@ -10,7 +10,7 @@ import UIKit
 import SnapKit
 import CoreData
 
-class Question4Controller: DataViewController,UITextViewDelegate {
+class Question4Controller: DataViewController,UITextViewDelegate,UINavigationControllerDelegate {
 
     var arrayData:[[String:AnyObject]] = [[String:AnyObject]]()
     
@@ -18,16 +18,19 @@ class Question4Controller: DataViewController,UITextViewDelegate {
     //问题的字典数据
     var questionDict:[String:AnyObject]!
     
-    var question:Question!
+    
     var output:String = ""
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        
+        self.navigationController?.setToolbarHidden(true, animated: false)
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        self.navigationController?.delegate = self
         self.navigationController?.setToolbarHidden(true, animated: false)
     }
     
@@ -43,8 +46,12 @@ class Question4Controller: DataViewController,UITextViewDelegate {
     
     func submitAction()  {
         print("点击提交了")
+        
+        if validate() == false{
+          return
+        }
         if question == nil{
-           return
+            addQuestion()
         }
         
         var questionnaire = Questionnaire.getQuestionnaireById(questionNaireid: output, context: context!)
@@ -75,8 +82,21 @@ class Question4Controller: DataViewController,UITextViewDelegate {
      
     }
     
+    func validate() -> Bool {
+        let text = textView.text
+        if text?.isEmpty == true{
+          QuestionUtil.showAlert(title: "please input something...", vc: self)
+            return false
+        }
+        return true
+    }
+    
     //MARK: - 提交答案
     override func addQuestion() {
+        
+        if validate() == false{
+          return
+        }
       
         let q1 = Question.getQuestionById(qid: output, inManagedObjectContext: context!)
         if q1 != nil{
@@ -131,9 +151,10 @@ class Question4Controller: DataViewController,UITextViewDelegate {
         
         if textView == nil{
             textView = UITextView()
-            textView.layer.borderColor = UIColor.red.cgColor
-            textView.layer.borderWidth = 2
+            textView.layer.borderColor = UIColor.groupTableViewBackground.cgColor
+            textView.layer.borderWidth = 1
             textView.returnKeyType = .done
+            textView.layer.cornerRadius = 3
             textView.delegate = self
             self.contentView.addSubview(textView)
             
@@ -161,6 +182,13 @@ class Question4Controller: DataViewController,UITextViewDelegate {
         }
         
         return true;
+    }
+    
+    //MARK: - UINavigationController delegate
+    func navigationController(_ navigationController: UINavigationController, willShow viewController: UIViewController, animated: Bool) {
+        if viewController is Question4Controller{
+           self.navigationController?.setToolbarHidden(true, animated: false)
+        }
     }
 }
 

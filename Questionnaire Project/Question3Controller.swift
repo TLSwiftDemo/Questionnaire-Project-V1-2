@@ -24,14 +24,19 @@ class Question3Controller: DataViewController {
     }
     
     override func addQuestion() {
-        let question = NSEntityDescription.insertNewObject(forEntityName: "Question", into: context!) as! Question
+        let q1 = Question.getQuestionById(qid: outputUUID, inManagedObjectContext: context!)
+        if q1 != nil{
+            self.question = q1
+        }else{
+            self.question = NSEntityDescription.insertNewObject(forEntityName: "Question", into: context!) as! Question
+            question.id = outputUUID
+        }
         
         
         let name = questionDict["name"] as? String
         let quesitonStr = questionDict["question"] as? String
         let answerLabel = operationView.count
         
-        question.id = outputUUID
         question.answerTime = DateUtil.getCurrentTime(formatter: nil)
         
         
@@ -58,6 +63,9 @@ class Question3Controller: DataViewController {
         super.buildUI(dict: dict)
         
         questionDict = dict
+        if outputUUID.isEmpty == false{
+            return
+        }
         outputUUID = QuestionUtil.randomSmallCaseString(length: 5)
         
         if let choices = dict["choices"]{

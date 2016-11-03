@@ -53,6 +53,8 @@ class DataViewController: UIViewController {
     var titleLabel: UILabel!
     var questionLb:UILabel!
     
+    var question:Question!
+    
 
     override func viewDidLoad() {
         super.viewDidLoad()

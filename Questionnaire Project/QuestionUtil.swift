@@ -42,6 +42,14 @@ class QuestionUtil: NSObject {
        questionnaireUUIDString = ""
     }
     
+   static func showAlert(title:String,vc:UIViewController) -> Void {
+        let alert = UIAlertController(title: nil, message: title, preferredStyle: .alert)
+        let action = UIAlertAction(title: "OK", style: .cancel, handler: nil)
+        alert.addAction(action)
+        
+        vc.present(alert, animated: true, completion: nil)
+    }
+    
     
 }
 
@@ -69,4 +77,6 @@ extension Array{
         }
         return false
     }
+    
+   
 }

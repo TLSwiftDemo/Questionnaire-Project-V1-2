@@ -21,14 +21,22 @@ import UIKit
 class ModelController: NSObject, UIPageViewControllerDataSource,NN_DataViewControllerProtocol {
 
     var pageData: [[String:AnyObject]] = [[String:AnyObject]]()
-
+//    var questionDict:[String:AnyObject]?
     var controllerArray = [DataViewController]()
     weak var pageViewController:UIPageViewController!
+    let appDelegate = UIApplication.shared.delegate as! AppDelegate
     
     override init() {
         super.init()
         
-        let questionDict = QuestionModel.getJsonData()
+        let questionDict = globalQuestionDict
+        
+        
+        if questionDict == nil{
+            QuestionUtil.showAlert(title: "从服务器读取数据失败", vc: (appDelegate.window?.rootViewController)!)
+            return
+        }
+
         
         if let questions = questionDict!["questions"] {
             pageData = questions as! [[String:AnyObject]]

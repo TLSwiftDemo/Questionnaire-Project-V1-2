@@ -29,6 +29,7 @@ class ResultController: UIViewController,UITableViewDelegate,UITableViewDataSour
         super.viewDidLoad()
         context = appDelegate.persistentContainer.viewContext
         // Do any additional setup after loading the view.
+        self.navigationItem.title = "Questionnaire"
         requestData()
         
         initView()
@@ -125,7 +126,6 @@ class ResultController: UIViewController,UITableViewDelegate,UITableViewDataSour
             let questionnaire = arrayData[indexPath.row]
             arrayData.removeObj(item: questionnaire)
             
-//            tableView.reloadRows(at: [indexPath], with: .automatic)
             tableView.deleteRows(at: [indexPath], with: .automatic)
             
             Questionnaire.deleteQuestionnaire(questionnaire: questionnaire, inContextObjectContext: context!)

@@ -32,21 +32,26 @@ class Question1Controller: DataViewController,UITableViewDataSource,UITableViewD
         guard let selectedDict = selectedQuestionDict else {
             return
         }
-        
         if outputUUID.isEmpty
         {
-          return
+            return
+        }
+        let q1 = Question.getQuestionById(qid: outputUUID, inManagedObjectContext: context!)
+        if q1 != nil{
+            self.question = q1
+        }else{
+            self.question = NSEntityDescription.insertNewObject(forEntityName: "Question", into: context!) as! Question
+            question.id = outputUUID
         }
         
-        let question = NSEntityDescription.insertNewObject(forEntityName: "Question", into: context!) as! Question
-        
+       
         
         let name = questionDict["name"] as? String
         let quesitonStr = questionDict["question"] as? String
         let answerLabel = selectedDict["label"] as? String
         let answerValue = selectedDict["value"] as? Int
         
-        question.id = outputUUID
+        
         question.answerTime = DateUtil.getCurrentTime(formatter: nil)
         
         
@@ -73,6 +78,9 @@ class Question1Controller: DataViewController,UITableViewDataSource,UITableViewD
     override func buildUI(dict:[String:AnyObject]) -> Void {
         
         questionDict = dict
+        if outputUUID.isEmpty == false{
+            return
+        }
         outputUUID = QuestionUtil.randomSmallCaseString(length: 5)
         
         if let choices = dict["choices"]{
