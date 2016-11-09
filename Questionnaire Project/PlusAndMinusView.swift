@@ -30,7 +30,7 @@ class PlusAndMinusView: UIView {
         super.init(frame: frame)
         
         plusBtn = UIButton()
-        plusBtn.backgroundColor = UIColor.red
+        plusBtn.backgroundColor = UIColor(red:255/255, green:182/255, blue:193/255, alpha:1)
         plusBtn.addTarget(self, action: #selector(plusAction(btn:)), for: .touchUpInside)
         self.addSubview(plusBtn)
         
@@ -46,7 +46,8 @@ class PlusAndMinusView: UIView {
         minusBtn = UIButton()
         minusBtn.setTitle("-", for: .normal)
         minusBtn.setTitleColor(UIColor.white, for: .normal)
-        minusBtn.backgroundColor = UIColor.red
+        minusBtn.backgroundColor = UIColor(red:255/255, green:182/255, blue:193/255, alpha:1)
+
         minusBtn.addTarget(self, action: #selector(minusAction(btn:)), for: .touchUpInside)
         self.addSubview(minusBtn)
         

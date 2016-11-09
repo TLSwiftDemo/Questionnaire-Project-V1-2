@@ -23,10 +23,19 @@ class Question1Controller: DataViewController,UITableViewDataSource,UITableViewD
 
     override func viewDidLoad() {
         super.viewDidLoad()
-       
+        self.view.backgroundColor = COLOR_BG
     }
     
-   
+    /// 添加验证
+    ///
+    /// - returns: 是否通过
+    override func validate() -> Bool {
+        if selectedQuestionDict == nil{
+            QuestionUtil.showAlert(title: "请选择一项", vc: self)
+            return false
+        }
+        return true
+    }
     override func addQuestion() {
         
         guard let selectedDict = selectedQuestionDict else {
@@ -59,14 +68,19 @@ class Question1Controller: DataViewController,UITableViewDataSource,UITableViewD
         question.type = questionDict["type"] as? String
         question.question = quesitonStr
         question.chioceLabel = answerLabel
-        question.chioceValue = "\(answerValue)"
+        question.chioceValue = "\(answerValue!)"
         
         do {
-            try context?.save()
+//            try context?.save()
             
+            //把每个问题添加到全局的数组中，用于后面的设置每个问题所属的调查问卷的对象
+            //这个方法判断是做了一个array的扩展
             if !appDelegate.globalQuestionsList.isContains(item:question){
                 appDelegate.globalQuestionsList.append(question)
             }
+            
+            
+            print("Question1Controller.globalQuestionsList.count=\(appDelegate.globalQuestionsList.count) ")
             
         } catch {
             print("error:\(error)")

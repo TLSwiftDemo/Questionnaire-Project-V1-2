@@ -14,8 +14,7 @@ class DetailController: BaseController,UITableViewDelegate,UITableViewDataSource
     
     var tableView:UITableView!
     var arrayData:[Question] = [Question]()
-    var context:NSManagedObjectContext?
-    let appDelegate = UIApplication.shared.delegate as! AppDelegate
+
     
     var questionnaire:Questionnaire!
 

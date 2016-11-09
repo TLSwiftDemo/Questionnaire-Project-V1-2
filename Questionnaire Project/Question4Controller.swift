@@ -13,13 +13,13 @@ import CoreData
 class Question4Controller: DataViewController,UITextViewDelegate,UINavigationControllerDelegate {
 
     var arrayData:[[String:AnyObject]] = [[String:AnyObject]]()
-    
+     var tipAlert:UIAlertController!
     var textView:UITextView!
     //问题的字典数据
     var questionDict:[String:AnyObject]!
     
     
-    var output:String = ""
+    var questionNaireUUID:String = ""
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -54,27 +54,44 @@ class Question4Controller: DataViewController,UITextViewDelegate,UINavigationCon
             addQuestion()
         }
         
-        var questionnaire = Questionnaire.getQuestionnaireById(questionNaireid: output, context: context!)
+        if questionNaireUUID.isEmpty == true{
+            questionNaireUUID = QuestionUtil.generateUUID()
+        }
+        
+        var questionnaire = Questionnaire.getQuestionnaireById(questionNaireid: questionNaireUUID, context: context!)
         
         if questionnaire == nil{
            questionnaire = NSEntityDescription.insertNewObject(forEntityName: "Questionnaire", into: context!) as? Questionnaire
         }
         questionnaire?.time = DateUtil.getCurrentTime(formatter: nil)
-        questionnaire?.name = QuestionUtil.generateUUID()
+        questionnaire?.name = questionNaireUUID
         
         //设置全局所有的问题的newRelationship
         for item in appDelegate.globalQuestionsList {
             item.newRelationship = questionnaire
+            
+            questionnaire?.addToQuestionList(item)
         }
+        
+        
+        print("globalQuestionsList：\(appDelegate.globalQuestionsList.count)")
         
         do {
             
+            
             try context?.save()
             
-            print("调查问卷对象保存成功了")
+            QuestionUtil.clearUUID()
             
-            let resultVc = ResultController()
-            self.navigationController?.pushViewController(resultVc, animated: true)
+            tipAlert = UIAlertController(title: "提交成功,谢谢您的配合", message: nil, preferredStyle: .alert)
+            let homeAction = UIAlertAction(title: "Home", style: .default, handler: { (action) in
+                self.navigationController?.popViewController(animated: true)
+            })
+            
+            let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+            tipAlert.addAction(homeAction)
+            tipAlert.addAction(cancelAction)
+            self.present(tipAlert, animated: true, completion: nil)
             
         } catch  {
             print(error)
@@ -82,7 +99,7 @@ class Question4Controller: DataViewController,UITextViewDelegate,UINavigationCon
      
     }
     
-    func validate() -> Bool {
+    override func validate() -> Bool {
         let text = textView.text
         if text?.isEmpty == true{
           QuestionUtil.showAlert(title: "please input something...", vc: self)
@@ -98,11 +115,12 @@ class Question4Controller: DataViewController,UITextViewDelegate,UINavigationCon
           return
         }
       
-        let q1 = Question.getQuestionById(qid: output, inManagedObjectContext: context!)
+        let q1 = Question.getQuestionById(qid: outputUUID, inManagedObjectContext: context!)
         if q1 != nil{
             question = q1
         }else{
             question = NSEntityDescription.insertNewObject(forEntityName: "Question", into: context!) as! Question
+            question.id = outputUUID
         }
         
         let name = questionDict["name"] as? String
@@ -110,7 +128,7 @@ class Question4Controller: DataViewController,UITextViewDelegate,UINavigationCon
         let answer = textView.text
         
    
-        question.id = output
+        
         question.answerTime = DateUtil.getCurrentTime(formatter: nil)
         
         question.name = name
@@ -121,13 +139,13 @@ class Question4Controller: DataViewController,UITextViewDelegate,UINavigationCon
         
         
         do {
-            try context?.save()
+//            try context?.save()
             print("saved data ")
             
             if !appDelegate.globalQuestionsList.isContains(item: question){
                 appDelegate.globalQuestionsList.append(question)
             }
-            
+            print("Question4Controller.globalQuestionsList.count=\(appDelegate.globalQuestionsList.count) ")
             
         } catch {
             print("error:\(error)")
@@ -140,10 +158,10 @@ class Question4Controller: DataViewController,UITextViewDelegate,UINavigationCon
         super.buildUI(dict: dict)
         
         questionDict = dict
-        if output.isEmpty == false{
+        if outputUUID.isEmpty == false{
           return
         }
-        output = QuestionUtil.randomSmallCaseString(length: 10)
+        outputUUID = QuestionUtil.randomSmallCaseString(length: 10)
         
         if let choices = dict["choices"]{
             arrayData = choices as! [[String : AnyObject]]

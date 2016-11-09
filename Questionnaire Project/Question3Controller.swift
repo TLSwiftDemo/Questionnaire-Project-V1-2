@@ -22,7 +22,16 @@ class Question3Controller: DataViewController {
 
         // Do any additional setup after loading the view.
     }
-    
+    /// 添加验证
+    ///
+    /// - returns: 是否通过
+    override func validate() -> Bool {
+        if operationView.count == 0{
+            QuestionUtil.showAlert(title: "请设置数量", vc: self)
+            return false
+        }
+        return true
+    }
     override func addQuestion() {
         let q1 = Question.getQuestionById(qid: outputUUID, inManagedObjectContext: context!)
         if q1 != nil{
@@ -46,11 +55,13 @@ class Question3Controller: DataViewController {
         question.chioceLabel = "\(answerLabel)"
         
         do {
-            try context?.save()
+//            try context?.save()
             
             if !appDelegate.globalQuestionsList.isContains(item: question){
                 appDelegate.globalQuestionsList.append(question)
             }
+            
+            print("Question3Controller.globalQuestionsList.count=\(appDelegate.globalQuestionsList.count) ")
             
         } catch {
             print("error:\(error)")
@@ -74,7 +85,8 @@ class Question3Controller: DataViewController {
         
         if operationView == nil{
             operationView = PlusAndMinusView()
-            operationView.backgroundColor = UIColor.gray
+            operationView.backgroundColor = UIColor(red:253/255, green:245/255, blue:230/255, alpha:1)
+
             self.contentView.addSubview(operationView)
             
             operationView.snp.makeConstraints { (make) in

@@ -60,6 +60,7 @@ class DataViewController: UIViewController {
         super.viewDidLoad()
 
         initToolBar()
+        self.view.backgroundColor = COLOR_BG
     }
     
     init() {
@@ -150,20 +151,36 @@ class DataViewController: UIViewController {
         
     }
     
+    /// 添加验证
+    ///
+    /// - returns: 是否通过
+    func validate() -> Bool {
+        return true
+    }
+    
     func previousAction(btn:UIBarButtonItem) -> Void {
         print("点击了previous")
+        
+        if validate() == false{
+            return
+        }
+        
         self.delegate?.prevAction(dataViewController: self)
         
         addQuestion()
     }
     
+    
+    
     func nextAction(btn:UIBarButtonItem) -> Void {
         print("点击了next")
-        
+        if validate() == false{
+            return
+        }
         self.delegate?.nextAction(dataViewController: self)
-        
-       addQuestion()
+        addQuestion()
     }
+
 
     func addQuestion() -> Void {
         

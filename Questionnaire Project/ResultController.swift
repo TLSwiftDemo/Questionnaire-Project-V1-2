@@ -15,15 +15,14 @@ class ResultController: BaseController,UITableViewDelegate,UITableViewDataSource
     var tableView:UITableView!
     var arrayData:[Questionnaire] = [Questionnaire]()
     
-     var context:NSManagedObjectContext?
-    let appDelegate = UIApplication.shared.delegate as! AppDelegate
+    
     
 
 
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        context = appDelegate.persistentContainer.viewContext
+        
         // Do any additional setup after loading the view.
         self.navigationItem.title = "Questionnaire"
         self.titlelb.text = "Questionnaire"

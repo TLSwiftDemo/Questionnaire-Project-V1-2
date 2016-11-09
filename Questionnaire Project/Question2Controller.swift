@@ -20,9 +20,18 @@ class Question2Controller: DataViewController,UITableViewDelegate,UITableViewDat
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        self.view.backgroundColor = COLOR_BG
     }
-    
+    /// 添加验证
+    ///
+    /// - returns: 是否通过
+    override func validate() -> Bool {
+        if selectedQuestionArray.count == 0{
+            QuestionUtil.showAlert(title: "请至少选择一项", vc: self)
+            return false
+        }
+        return true
+    }
     override func addQuestion() {
         
         if outputUUID.isEmpty
@@ -68,11 +77,13 @@ class Question2Controller: DataViewController,UITableViewDelegate,UITableViewDat
         question.chioceValue = "\(answerValue)"
         
         do {
-            try context?.save()
+//            try context?.save()
             
             if !appDelegate.globalQuestionsList.isContains(item: question){
                 appDelegate.globalQuestionsList.append(question)
             }
+            
+            print("Question2Controller.globalQuestionsList.count=\(appDelegate.globalQuestionsList.count) ")
             
         } catch {
             print("error:\(error)")

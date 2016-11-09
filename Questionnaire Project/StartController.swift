@@ -8,38 +8,46 @@
 
 import UIKit
 import SnapKit
+import CoreData
 
 var globalQuestionDict:[String:AnyObject]?
 
 class StartController: UIViewController {
 
-    
+    let appDelegate = UIApplication.shared.delegate as! AppDelegate
     var spinner:UIActivityIndicatorView!
+    var context:NSManagedObjectContext?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = UIColor.white
-        
+        context = appDelegate.persistentContainer.viewContext
         initView()
     }
     
     func initView() -> Void
     {
-        let btn = UIButton()
-        btn.setTitle("Start", for: .normal)
-        btn.setTitleColor(UIColor.red, for: .normal)
-        btn.titleLabel?.font = UIFont.boldSystemFont(ofSize: 30)
+        let label=UILabel(frame: CGRect(x: 40, y: 45, width: 500, height: 300))
+        label.text="Questionnaire"
+        self.view.addSubview(label)
+        label.font = UIFont.boldSystemFont(ofSize: 50)
+        label.textColor = UIColor.red
+        
+        
+        let btn = createBtn(title: "Start")
         btn.addTarget(self, action: #selector(startAction), for: .touchUpInside)
         self.view.addSubview(btn)
+    
         
         btn.snp.makeConstraints { (make) in
             make.center.equalTo(self.view.snp.center)
+            make.left.equalTo(20)
+            make.right.equalTo(-20)
+            make.height.equalTo(50)
         }
         
-        let resultBtn = UIButton()
-        resultBtn.setTitle("Result", for: .normal)
-        resultBtn.setTitleColor(UIColor.red, for: .normal)
-        resultBtn.titleLabel?.font = UIFont.boldSystemFont(ofSize: 30)
+        // btn of Result
+        let resultBtn = createBtn(title: "Result")
         resultBtn.addTarget(self, action: #selector(resultAction), for: .touchUpInside)
         self.view.addSubview(resultBtn)
         
@@ -49,7 +57,18 @@ class StartController: UIViewController {
             make.size.equalTo(btn.snp.size)
         }
         
+        //btn of Report
+        let reportBtn = createBtn(title: "Report")
+        reportBtn.addTarget(self, action: #selector(reportAction(btn:)), for: .touchUpInside)
+        self.view.addSubview(reportBtn)
         
+        reportBtn.snp.makeConstraints { (make) in
+            make.centerX.equalTo(btn.snp.centerX)
+            make.top.equalTo(resultBtn.snp.bottom).offset(10)
+            make.size.equalTo(btn.snp.size)
+        }
+        
+
         spinner = UIActivityIndicatorView()
         spinner.activityIndicatorViewStyle = .gray
         self.view.addSubview(spinner)
@@ -60,6 +79,21 @@ class StartController: UIViewController {
 
     }
     
+    func reportAction(btn:UIButton) -> Void {
+        let typeVc = QuestionTypeController()
+//        let reportVc = BarsExample()
+        self.navigationController?.pushViewController(typeVc, animated: true)
+    }
+    
+    func createBtn(title:String) -> UIButton {
+        let btn = UIButton()
+        btn.setTitle(title, for: .normal)
+        btn.setTitleColor(UIColor.orange, for: .normal)
+        btn.titleLabel?.font = UIFont.boldSystemFont(ofSize: 30)
+        btn.backgroundColor = UIColor.groupTableViewBackground
+        return btn
+    }
+    
     func resultAction() -> Void {
         let result = ResultController()
         self.navigationController?.pushViewController(result, animated: true)
@@ -68,6 +102,12 @@ class StartController: UIViewController {
     func startAction() -> Void {
         
         spinner.startAnimating()
+        
+       
+        appDelegate.globalQuestionsList.removeAll()
+        context?.reset()
+        
+        
         
         if QuestionModel.getJsonFromCatch() != nil {
             globalQuestionDict = QuestionModel.getJsonFromCatch()

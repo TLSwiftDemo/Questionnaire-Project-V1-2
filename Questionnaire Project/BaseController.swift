@@ -7,17 +7,23 @@
 //
 
 import UIKit
+import CoreData
 
 class BaseController: UIViewController {
     
     var titlelb:UILabel!
+    var context:NSManagedObjectContext?
+    let appDelegate = UIApplication.shared.delegate as! AppDelegate
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        context = appDelegate.persistentContainer.viewContext
+        
+       
 
         let topView = UIView()
         self.view.addSubview(topView)
-        topView.backgroundColor = UIColor.lightGray
+        topView.backgroundColor = COLOR_BG
         
         topView.snp.makeConstraints { (make) in
             make.left.equalTo(0)
@@ -47,6 +53,8 @@ class BaseController: UIViewController {
         titlelb.snp.makeConstraints { (make) in
             make.center.equalTo(topView.snp.center)
         }
+        
+        
         
     }
     

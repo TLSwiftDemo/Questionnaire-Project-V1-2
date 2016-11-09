@@ -18,7 +18,7 @@ extension Questionnaire {
 
     @NSManaged public var name: String?
     @NSManaged public var time: String?
-    @NSManaged public var questionList: NSSet?
+    @NSManaged public var questionList: NSMutableSet?
 
 }
 
@@ -26,7 +26,13 @@ extension Questionnaire {
 extension Questionnaire {
 
     @objc(addQuestionListObject:)
-    @NSManaged public func addToQuestionList(_ value: Question)
+    public func addToQuestionList(_ value: Question){
+        if questionList == nil{
+          questionList = NSMutableSet()
+        }
+        questionList?.add(value)
+        
+    }
 
     @objc(removeQuestionListObject:)
     @NSManaged public func removeFromQuestionList(_ value: Question)
