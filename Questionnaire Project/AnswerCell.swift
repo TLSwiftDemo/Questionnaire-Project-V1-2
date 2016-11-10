@@ -52,6 +52,7 @@ class AnswerCell: UITableViewCell {
         
         answerTimeLb = UILabel()
         answerTimeLb.textAlignment = .right
+        //这个是设置回答问题时间的颜色
         answerTimeLb.textColor = UIColor.brown
         self.addSubview(answerTimeLb)
         

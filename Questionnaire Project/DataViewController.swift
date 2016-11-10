@@ -204,20 +204,11 @@ extension DataViewController{
         guard let name = dict["name"]  else {
             return
         }
-        guard let title = dict["title"] else {
-            return
-        }
+       
         guard let question = dict["question"] else {
             return
         }
-        
-        guard let choices = dict["choices"]  else {
-            return
-        }
-        
-        let type = dict["type"]
-        
-        
+  
         self.titleLabel.text = name as? String
         self.questionLb.text = question as? String
         

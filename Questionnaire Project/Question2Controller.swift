@@ -59,12 +59,15 @@ class Question2Controller: DataViewController,UITableViewDelegate,UITableViewDat
             let value = item["value"] as? Int
             
             answerLabel.append(label!)
-            answerLabel.append(";")
+            answerLabel.append(",")
             answerValue.append("\(value!)")
-            answerValue.append(";")
+            answerValue.append(",")
         }
         
+        answerLabel = answerLabel.substring(to: answerLabel.index(before: answerLabel.endIndex))
         
+        answerValue = answerValue.substring(to: answerValue.index(before: answerValue.endIndex))
+
         
         question.id = outputUUID
         question.answerTime = DateUtil.getCurrentTime(formatter: nil)

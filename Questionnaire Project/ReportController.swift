@@ -14,24 +14,29 @@ class ReportController: BaseController {
 
     fileprivate var chart: Chart? // arc
     
-    let sideSelectorHeight: CGFloat = 50
-    var tipLb:UILabel!
+    private let sideSelectorHeight: CGFloat = 50
+    private var tipLb:UILabel!
+    private var descLb:UILabel!
     
     /// 报表的数据
     var arrayData:[resultTuple]?
-    var minValue:Int!
-    var maxValue:Int!
+    var xTitle:String = "Answer"
+    var yTitle:String = "Count"
+    var descString:String = ""
+    
+    private var minValue:Int!
+    private var maxValue:Int!
     
     /// 纵坐标的分割值
-    var splitValue:Int!
+    private var splitValue:Int!
     //总共参与人数
-    var totalCountOfPerson:Int = 0
+    private var totalCountOfPerson:Int = 0
     
     fileprivate func chart(horizontal: Bool) -> Chart {
         let labelSettings = ChartLabelSettings(font: ExamplesDefaults.labelFont)
         
     
-        let color3 = UIColor.green.withAlphaComponent(0.6)
+        let color3 = COLOR_BG
         
         let zero = ChartAxisValueDouble(0)
         var barModels = [ChartStackedBarModel]()
@@ -54,18 +59,19 @@ class ReportController: BaseController {
         )
         let (xValues, yValues) = horizontal ? (axisValues1, axisValues2) : (axisValues2, axisValues1)
         
-        let xModel = ChartAxisModel(axisValues: xValues, axisTitleLabel: ChartAxisLabel(text: "Answer", settings: labelSettings))
-        let yModel = ChartAxisModel(axisValues: yValues, axisTitleLabel: ChartAxisLabel(text: "count", settings: labelSettings.defaultVertical()))
+        let xModel = ChartAxisModel(axisValues: xValues, axisTitleLabel: ChartAxisLabel(text: xTitle, settings: labelSettings))
+        let yModel = ChartAxisModel(axisValues: yValues, axisTitleLabel: ChartAxisLabel(text: yTitle, settings: labelSettings.defaultVertical()))
         
         let frame = ExamplesDefaults.chartFrame(self.view.bounds)
         let chartFrame = self.chart?.frame ?? CGRect(x: frame.origin.x, y: frame.origin.y, width: frame.size.width, height: frame.size.height - sideSelectorHeight-50)
         let coordsSpace = ChartCoordsSpaceLeftBottomSingleAxis(chartSettings: ExamplesDefaults.chartSettings, chartFrame: chartFrame, xModel: xModel, yModel: yModel)
         let (xAxis, yAxis, innerFrame) = (coordsSpace.xAxis, coordsSpace.yAxis, coordsSpace.chartInnerFrame)
         
-        let chartStackedBarsLayer = ChartStackedBarsLayer(xAxis: xAxis, yAxis: yAxis, innerFrame: innerFrame, barModels: barModels, horizontal: horizontal, barWidth: 40, animDuration: 0.5)
+        let chartStackedBarsLayer = ChartStackedBarsLayer(xAxis: xAxis, yAxis: yAxis, innerFrame: innerFrame, barModels: barModels, horizontal: horizontal, barWidth: 30, animDuration: 0.5)
         
         let settings = ChartGuideLinesDottedLayerSettings(linesColor: UIColor.black, linesWidth: ExamplesDefaults.guidelinesWidth)
         let guidelinesLayer = ChartGuideLinesDottedLayer(xAxis: xAxis, yAxis: yAxis, innerFrame: innerFrame, settings: settings)
+
         
         return Chart(
             frame: chartFrame,
@@ -78,19 +84,31 @@ class ReportController: BaseController {
         )
     }
     
+    
+    
     fileprivate func showChart(horizontal: Bool) {
         self.chart?.clearView()
         
         let chart = self.chart(horizontal: horizontal)
         self.view.addSubview(chart.view)
         self.chart = chart
+        
+        self.chart?.view.contentMode = .redraw
+        
+        self.chart?.view.snp.makeConstraints({ (make) in
+            make.left.equalTo(0)
+            make.top.equalTo(64)
+            make.bottom.equalTo(-50)
+            make.right.equalTo(0)
+        })
     }
     
+
+    //MARK: - viewDidLoad
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = UIColor.white
-        let array = Question.splitCountByAnswer(context: context!)
-        arrayData = array
+        self.titlelb.text = "Bar Charts"
         
         if arrayData?.count == 0{
             QuestionUtil.showAlert(title: "No Data", vc: self)
@@ -122,6 +140,24 @@ class ReportController: BaseController {
             make.height.equalTo(50)
             make.right.equalTo(0)
         }
+        
+        
+        descLb = UILabel()
+        descLb.isHidden = descString.isEmpty ? true:false
+        descLb.backgroundColor = UIColor(red: 215/255, green: 229/255, blue: 184/255, alpha: 1)
+        descLb.text = descString
+        descLb.sizeToFit()
+        descLb.textColor = UIColor.red
+        descLb.lineBreakMode = .byCharWrapping
+        descLb.numberOfLines = 0
+        self.view.addSubview(descLb)
+        
+        descLb.snp.makeConstraints { (make) in
+            make.left.equalTo(0)
+            make.bottom.equalTo(tipLb.snp.top)
+            make.height.equalTo(50)
+            make.right.equalTo(0)
+        }
     }
     
     func calculateValue() -> Void {
@@ -144,72 +180,6 @@ class ReportController: BaseController {
         
     }
     
-    class DirSelector: UIView {
-        
-        let horizontal: UIButton
-        let vertical: UIButton
-        
-        weak var controller: ReportController?
-        
-        fileprivate let buttonDirs: [UIButton : Bool]
-        
-        init(frame: CGRect, controller: ReportController) {
-            
-            self.controller = controller
-            
-            self.horizontal = UIButton()
-            self.horizontal.setTitle("Horizontal", for: UIControlState())
-            self.vertical = UIButton()
-            self.vertical.setTitle("Vertical", for: UIControlState())
-            
-            self.buttonDirs = [self.horizontal : true, self.vertical : false]
-            
-            super.init(frame: frame)
-            
-            self.addSubview(self.horizontal)
-            self.addSubview(self.vertical)
-            
-            for button in [self.horizontal, self.vertical] {
-                button.titleLabel?.font = ExamplesDefaults.fontWithSize(14)
-                button.setTitleColor(UIColor.blue, for: UIControlState())
-                button.addTarget(self, action: #selector(DirSelector.buttonTapped(_:)), for: .touchUpInside)
-            }
-        }
-        
-        func buttonTapped(_ sender: UIButton) {
-            let horizontal = sender == self.horizontal ? true : false
-            controller?.showChart(horizontal: horizontal)
-        }
-        
-        override func didMoveToSuperview() {
-            let views = [self.horizontal, self.vertical]
-            for v in views {
-                v.translatesAutoresizingMaskIntoConstraints = false
-            }
-            
-            let namedViews = views.enumerated().map{index, view in
-                ("v\(index)", view)
-            }
-            
-            var viewsDict = Dictionary<String, UIView>()
-            for namedView in namedViews {
-                viewsDict[namedView.0] = namedView.1
-            }
-            
-            let buttonsSpace: CGFloat = Env.iPad ? 20 : 10
-            
-            let hConstraintStr = namedViews.reduce("H:|") {str, tuple in
-                "\(str)-(\(buttonsSpace))-[\(tuple.0)]"
-            }
-            
-            let vConstraits = namedViews.flatMap {NSLayoutConstraint.constraints(withVisualFormat: "V:|[\($0.0)]", options: NSLayoutFormatOptions(), metrics: nil, views: viewsDict)}
-            
-            self.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: hConstraintStr, options: NSLayoutFormatOptions(), metrics: nil, views: viewsDict)
-                + vConstraits)
-        }
-        
-        required init(coder aDecoder: NSCoder) {
-            fatalError("init(coder:) has not been implemented")
-        }
-    }
+
+
 }

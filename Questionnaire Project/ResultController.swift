@@ -15,10 +15,6 @@ class ResultController: BaseController,UITableViewDelegate,UITableViewDataSource
     var tableView:UITableView!
     var arrayData:[Questionnaire] = [Questionnaire]()
     
-    
-    
-
-
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -87,7 +83,7 @@ class ResultController: BaseController,UITableViewDelegate,UITableViewDataSource
         }
         
         let questionnaire = arrayData[indexPath.row]
-        cell?.textLabel?.text = questionnaire.name
+        cell?.textLabel?.text = "\(indexPath.item)"
         
         cell?.detailTextLabel?.text = questionnaire.time
     

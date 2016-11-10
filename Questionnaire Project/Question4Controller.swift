@@ -104,6 +104,9 @@ class Question4Controller: DataViewController,UITextViewDelegate,UINavigationCon
         if text?.isEmpty == true{
           QuestionUtil.showAlert(title: "please input something...", vc: self)
             return false
+        }else if ((text?.characters.count)!>50){
+            QuestionUtil.showAlert(title: "The count of input can't beyond 50 characters", vc: self)
+            return false
         }
         return true
     }

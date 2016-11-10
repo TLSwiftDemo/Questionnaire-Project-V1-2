@@ -38,7 +38,7 @@ struct ExamplesDefaults {
         let chartSettings = ChartSettings()
         chartSettings.leading = 10
         chartSettings.top = 10
-        chartSettings.trailing = 10
+        chartSettings.trailing = 30
         chartSettings.bottom = 10
         chartSettings.labelsToAxisSpacingX = 5
         chartSettings.labelsToAxisSpacingY = 5

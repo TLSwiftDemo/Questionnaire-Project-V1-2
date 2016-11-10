@@ -45,18 +45,15 @@ public class Question: NSManagedObject {
    /// - parameter context: 上下文
    ///
    /// - returns:
-   class func getAllByType(type:QuestionType,context:NSManagedObjectContext) -> [Question]? {
+   class func getAllByType(type:String,context:NSManagedObjectContext) -> [Question]? {
         let request = NSFetchRequest<Question>(entityName: "Question")
-        let predicate = NSPredicate(format: "type = %@", "single-option")
+        let predicate = NSPredicate(format: "type = %@", type)
         request.predicate = predicate
     
-        var result:[Question] = [Question]()
         do {
             if let array = try? context.fetch(request) {
                 return array
             }
-        } catch  {
-            print(error)
         }
         
         return nil
@@ -67,13 +64,13 @@ public class Question: NSManagedObject {
     /// 根据回答问题的人数切割数据
     ///
     /// - returns: 返回一个元组
-    class func splitCountByAnswer(context:NSManagedObjectContext) ->[resultTuple]? {
+    class func splitCountByAnswer(type:String,context:NSManagedObjectContext) ->[resultTuple]? {
     
         var labels = [String]()
       
         var tuplesArray = [(name:String,value:Int)]()
   
-        if let array = Question.getAllByType(type: QuestionType.singleOption, context: context){
+        if let array = Question.getAllByType(type:type, context: context){
             
             //第一遍循环把所有回答的问题记录下来
             for item in array {
@@ -94,6 +91,11 @@ public class Question: NSManagedObject {
                     if lb == item.chioceLabel{
                         count += 1
                         name = lb
+                        if type == QuestionType.numeric.rawValue{
+                          name = "\(name)个设备"
+                        }else if(type == QuestionType.multiOption.rawValue){
+                          name = item.chioceValue!
+                        }
                         tuple = (name,count)
                     }
                 }

@@ -63,8 +63,6 @@ class Question3Controller: DataViewController {
             
             print("Question3Controller.globalQuestionsList.count=\(appDelegate.globalQuestionsList.count) ")
             
-        } catch {
-            print("error:\(error)")
         }
 
     }

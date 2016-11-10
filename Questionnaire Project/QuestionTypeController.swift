@@ -61,17 +61,47 @@ class QuestionTypeController: BaseController,UITableViewDelegate,UITableViewData
         let cellType = arrayData[indexPath.row]
         switch cellType {
         case .singleOption:
-            let report = ReportController()
-            
-            self.navigationController?.pushViewController(report, animated: true)
+            getQ1Data()
         case .multiOption:
+            getQ2Data()
             break
         case .numeric:
+            getQ3Data()
             break
         case .text:
             break
        
         }
+    }
+    
+    //MARK: - 请求不同问题类型的数据
+    
+    func getQ1Data() -> Void {
+        let array = Question.splitCountByAnswer(type: QuestionType.singleOption.rawValue, context: context!)
+        let report = ReportController()
+        report.arrayData = array
+        report.xTitle = "Answer"
+        report.yTitle = "Count"
+        self.navigationController?.pushViewController(report, animated: true)
+    }
+    
+    func getQ3Data() -> Void {
+        let array = Question.splitCountByAnswer(type: QuestionType.numeric.rawValue, context: context!)
+        let report = ReportController()
+        report.arrayData = array
+        report.xTitle = "device"
+        report.yTitle = "numbers"
+        self.navigationController?.pushViewController(report, animated: true)
+    }
+    
+    func getQ2Data() -> Void {
+        let array = Question.splitCountByAnswer(type: QuestionType.multiOption.rawValue, context: context!)
+        let report = ReportController()
+        report.arrayData = array
+        report.xTitle = "Answer"
+        report.yTitle = "Count"
+        report.descString = "1=Introduction to COMP327; 2=Introduction to Core Data; 3=Swift Intro; 4=The Internet of Things"
+        self.navigationController?.pushViewController(report, animated: true)
     }
  
 
