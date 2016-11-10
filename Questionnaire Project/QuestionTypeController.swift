@@ -69,6 +69,7 @@ class QuestionTypeController: BaseController,UITableViewDelegate,UITableViewData
             getQ3Data()
             break
         case .text:
+            QuestionUtil.showAlert(title: "is building...", vc: self)
             break
        
         }

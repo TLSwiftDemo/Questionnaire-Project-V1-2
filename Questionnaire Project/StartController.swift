@@ -28,11 +28,19 @@ class StartController: UIViewController {
     
     func initView() -> Void
     {
-        let label=UILabel(frame: CGRect(x: 40, y: 45, width: 500, height: 300))
+        let label=UILabel()
         label.text="Questionnaire"
+        label.textAlignment = .center
         self.view.addSubview(label)
         label.font = UIFont.boldSystemFont(ofSize: 50)
         label.textColor = UIColor.red
+        
+        label.snp.makeConstraints { (make) in
+            make.left.equalTo(0)
+            make.top.equalTo(60)
+            make.right.equalTo(0)
+            make.height.equalTo(60)
+        }
         
         
         let btn = createBtn(title: "Start")
