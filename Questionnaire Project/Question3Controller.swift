@@ -26,10 +26,10 @@ class Question3Controller: DataViewController {
     ///
     /// - returns: 是否通过
     override func validate() -> Bool {
-        if operationView.count == 0{
-            QuestionUtil.showAlert(title: "请设置数量", vc: self)
-            return false
-        }
+//        if operationView.count == 0{
+//            QuestionUtil.showAlert(title: "请设置数量", vc: self)
+//            return false
+//        }
         return true
     }
     override func addQuestion() {

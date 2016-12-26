@@ -30,7 +30,8 @@ class DetailController: BaseController,UITableViewDelegate,UITableViewDataSource
     func requestData() -> Void {
         let request = NSFetchRequest<Question>(entityName: "Question")
         request.predicate = NSPredicate(format: "newRelationship = %@", questionnaire)
-        
+        let sortDescritor = NSSortDescriptor(key: "answerTime", ascending: true, selector: #selector(NSString.localizedCaseInsensitiveCompare(_:)))
+        request.sortDescriptors = [sortDescritor]
         do {
             if let results = (try? context?.fetch(request)){
                 
